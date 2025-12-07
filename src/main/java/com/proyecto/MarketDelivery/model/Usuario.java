@@ -2,67 +2,67 @@ package com.proyecto.MarketDelivery.model;
 
 import jakarta.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Usuario")
     private Integer id;
 
-    @Column(name = "Nombre1_usuario", length = 50)
+    @Column(name = "Nombre1_usuario")
     private String nombre1;
 
-    @Column(name = "Nombre2_usuario", length = 50)
+    @Column(name = "Nombre2_usuario")
     private String nombre2;
 
-    @Column(name = "Apellido1_usuario", length = 50)
+    @Column(name = "Apellido1_usuario")
     private String apellido1;
 
-    @Column(name = "Apellido2_usuario", length = 50)
+    @Column(name = "Apellido2_usuario")
     private String apellido2;
 
-    @Column(name = "Cedula_usuario", length = 20)
+    @Column(name = "Cedula_usuario")
     private String cedula;
 
-    @Column(name = "Email_usuario", length = 100)
+    @Column(name = "Email_usuario")
     private String email;
 
-    @Column(name = "Telefono_usuario", length = 20)
+    @Column(name = "Telefono_usuario")
     private String telefono;
 
-    @Column(name = "Dirección_usuario", length = 100)
+    @Column(name = "Direccion_usuario")
     private String direccion;
 
-    @Column(name = "password", length = 255)
+    @Column(name = "user_name", nullable = false)
+    private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "user_name", unique = true, length = 255)
-    private String userName;
-
-    // Relación con role (muchos a muchos para flexibilidad)
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_roles",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private Set<Roles> roles;
-
-    // Carrito (opcional mapping simple)
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "Carrito_Id_Carrito")
     private Carrito carrito;
 
-    // Emprendimientos: 1 usuario -> muchos emprendimientos
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Emprendimiento> emprendimientos;
+    @OneToMany(mappedBy = "usuario")
+    private List<Pqr> pqrs;
 
-    // getters / setters
+    @OneToMany(mappedBy = "usuario")
+    private List<Factura> facturas;
 
-    public Usuario() {}
+    @OneToMany(mappedBy = "usuario")
+    private List<Resena> resenas;
 
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_roles",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    private List<Rol> roles;
+
+    // Getters y Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -90,18 +90,24 @@ public class Usuario {
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }
 
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    public String getUserName() { return userName; }
-    public void setUserName(String userName) { this.userName = userName; }
-
-    public Set<Roles> getRoles() { return roles; }
-    public void setRoles(Set<Roles> roles) { this.roles = roles; }
 
     public Carrito getCarrito() { return carrito; }
     public void setCarrito(Carrito carrito) { this.carrito = carrito; }
 
-    public List<Emprendimiento> getEmprendimientos() { return emprendimientos; }
-    public void setEmprendimientos(List<Emprendimiento> emprendimientos) { this.emprendimientos = emprendimientos; }
+    public List<Pqr> getPqrs() { return pqrs; }
+    public void setPqrs(List<Pqr> pqrs) { this.pqrs = pqrs; }
+
+    public List<Factura> getFacturas() { return facturas; }
+    public void setFacturas(List<Factura> facturas) { this.facturas = facturas; }
+
+    public List<Resena> getResenas() { return resenas; }
+    public void setResenas(List<Resena> resenas) { this.resenas = resenas; }
+
+    public List<Rol> getRoles() { return roles; }
+    public void setRoles(List<Rol> roles) { this.roles = roles; }
 }

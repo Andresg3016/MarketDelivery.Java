@@ -14,7 +14,7 @@ public class DetalleFactura {
 
     @ManyToOne
     @JoinColumn(name = "Producto_Id_Producto")
-    private Productos producto;
+    private Producto producto;
 
     @Column(name = "Cantidad")
     private Integer cantidad;

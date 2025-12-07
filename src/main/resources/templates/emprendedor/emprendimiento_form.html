@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${emprendimiento.id == null} ? 'Nuevo Emprendimiento' : 'Editar Emprendimiento'">Emprendimiento</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <h1>🚀 Emprendedor</h1>
+        <p>Gestión de tus emprendimientos y servicios.</p>
+    </div>
+    <div class="right-panel">
+        <div th:if="${error}" class="error-msg" th:text="${error}"></div>
+        <div th:if="${success}" class="success-msg" th:text="${success}"></div>
+
+        <form th:action="${emprendimiento.id == null} ? @{/emprendedor/emprendimiento} : @{'/emprendedor/emprendimiento/editar/' + ${emprendimiento.id}}"
+              th:object="${emprendimiento}" method="post">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" placeholder="Nombre del producto o servicio" required>
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea th:field="*{descripcion}" placeholder="Descripción..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tipo</label>
+                <select th:field="*{tipo}" required>
+                    <option th:each="tipo : ${tipos}" th:value="${tipo}" th:text="${tipo}" th:selected="${tipo.equals(emprendimiento.tipo)}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Ciudad</label>
+                <input type="text" th:field="*{ciudad}" placeholder="Ciudad" required>
+            </div>
+            <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" th:field="*{direccion}" placeholder="Dirección" required>
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text" th:field="*{telefono}" placeholder="Teléfono">
+            </div>
+            <button type="submit" th:text="${emprendimiento.id == null} ? 'Crear' : 'Actualizar'">Enviar</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 package com.proyecto.MarketDelivery.repository;
 
-import com.proyecto.MarketDelivery.model.Factura;
+import com.proyecto.MarketDelivery.model.Servicio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FacturaRepository extends JpaRepository<Factura, Integer> {
+public interface ServicioRepository extends JpaRepository<Servicio, Integer> {
 }

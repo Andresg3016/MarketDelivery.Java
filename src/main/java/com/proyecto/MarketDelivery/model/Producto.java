@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "productos")
-public class Productos {
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,18 +21,10 @@ public class Productos {
     @Column(name = "Descripción")
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "Catálogo_Id_Catálogo")
-    private Catalogo catalogo;
-
     @Column(name = "Stock")
     private Integer stock;
 
-    @ManyToOne
-    @JoinColumn(name = "Promoción_Id_Promoción")
-    private Promocion promocion;
-
-    public Productos() {}
+    public Producto() {}
 
     // getters / setters...
     public Integer getId() { return id; }
@@ -43,10 +35,6 @@ public class Productos {
     public void setValorUnitario(BigDecimal valorUnitario) { this.valorUnitario = valorUnitario; }
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-    public Catalogo getCatalogo() { return catalogo; }
-    public void setCatalogo(Catalogo catalogo) { this.catalogo = catalogo; }
     public Integer getStock() { return stock; }
     public void setStock(Integer stock) { this.stock = stock; }
-    public Promocion getPromocion() { return promocion; }
-    public void setPromocion(Promocion promocion) { this.promocion = promocion; }
 }

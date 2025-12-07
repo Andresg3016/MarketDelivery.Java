@@ -2,6 +2,8 @@ package com.proyecto.MarketDelivery.controller;
 
 import com.proyecto.MarketDelivery.model.Usuario;
 import com.proyecto.MarketDelivery.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,21 +12,39 @@ import java.util.List;
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    private final UsuarioService service;
-    public UsuarioController(UsuarioService service){ this.service = service; }
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping
-    public List<Usuario> listar(){ return service.findAll(); }
+    public List<Usuario> getAllUsuarios() {
+        return usuarioService.getAllUsuarios();
+    }
 
     @GetMapping("/{id}")
-    public Usuario obtener(@PathVariable Integer id){ return service.findById(id); }
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id) {
+        return usuarioService.getUsuarioById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping
-    public Usuario crear(@RequestBody Usuario u){ return service.create(u); }
+    public Usuario createUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.saveUsuario(usuario);
+    }
 
     @PutMapping("/{id}")
-    public Usuario actualizar(@PathVariable Integer id, @RequestBody Usuario u){ return service.update(id, u); }
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        return usuarioService.getUsuarioById(id)
+                .map(existing -> {
+                    usuario.setId(id);
+                    return ResponseEntity.ok(usuarioService.saveUsuario(usuario));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Integer id){ service.delete(id); }
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id) {
+        usuarioService.deleteUsuario(id);
+        return ResponseEntity.noContent().build();
+    }
 }

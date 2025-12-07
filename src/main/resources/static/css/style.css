@@ -1,0 +1,36 @@
+* { 
+margin: 0; 
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #645701 100%);
+min-height: 100vh; display: flex; justify-content: center;
+align-items: center; 
+} 
+.container { background: white;
+border-radius: 10px;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+display: flex; max-width: 900px; width: 100%;
+overflow: hidden;
+} 
+.left-panel {
+background:linear-gradient(135deg,#f5bd27 100%);
+color: white;
+padding: 50px;
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+.left-panel h1 {
+font-size: 32px;
+margin-bottom: 20px;
+} .left-panel p
+{
+font-size: 16px;
+line-height: 1.6; margin-bottom: 30px;
+}
+.right-panel
+{ padding: 50px; flex: 1; display: flex; flex-direction: column; justify-content: center; } .form-section { display: none; } .form-section.active { display: block; } .form-group { margin-bottom: 20px; } label { display: block; margin-bottom: 5px; color: #333; font-weight: 500; } input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; transition: border-color 0.3s; } input:focus { outline: none; border-color: #f5bd27; } button { width: 100%; padding: 12px; background: linear-gradient(135deg,#f5bd27 100%); color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s; } button:hover { transform: translateY(-2px); } .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #eee; } .tab-btn { padding: 10px 20px; background: none; border: none; color: #999; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; } .tab-btn.active { color: #f5bd27; border-bottom-color: #667eea; } .toggle-text { text-align: center; margin-top: 20px; color: #666; } .toggle-text a { color: #667eea; text-decoration: none; cursor: pointer; font-weight: 600; } .success-msg { color: #28a745; font-size: 14px; margin-top: 10px; } .error-msg { color: #dc3545; font-size: 14px; margin-top: 10px; } @media (max-width: 768px) { .container { flex-direction: column; } .left-panel, .right-panel { padding: 30px; } }

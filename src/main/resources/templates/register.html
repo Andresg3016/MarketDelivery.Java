@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - MarketDelivery</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:if="${error}" style="color: red; font-weight: bold;">
+    <p th:text="${error}"></p>
+</div>
+<div th:if="${success}" style="color: green; font-weight: bold;">
+    <p th:text="${success}"></p>
+</div>
+
+<div class="container">
+    <div class="left-panel">
+        <h1>🚀 MarketDelivery</h1>
+        <p>Crea tu cuenta para gestionar tus emprendimientos o comprar productos.</p>
+    </div>
+
+    <div class="right-panel">
+        <form th:action="@{/register}" th:object="${usuario}" method="post">
+
+            <!-- USERNAME NUEVO -->
+            <div class="form-group">
+                <label for="userName">Nombre de Usuario</label>
+                <input type="text" id="userName" th:field="*{userName}" placeholder="Tu nombre de usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}" placeholder="tu@email.com"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" th:field="*{password}" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar Contraseña</label>
+                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rolSeleccionado">Rol</label>
+                <select id="rolSeleccionado" th:field="*{rolSeleccionado}" required>
+                    <option value="">Selecciona un rol</option>
+                    <option value="CLIENTE">Cliente</option>
+                    <option value="EMPRENDEDOR">Emprendedor</option>
+                </select>
+            </div>
+
+            <button type="submit">Registrarse</button>
+        </form>
+
+        <div class="toggle-text">
+            ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

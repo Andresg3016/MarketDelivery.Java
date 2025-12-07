@@ -1,7 +1,9 @@
 package com.proyecto.MarketDelivery.controller;
 
 import com.proyecto.MarketDelivery.model.Emprendimiento;
-import com.proyecto.MarketDelivery.repository.EmprendimientoRepository;
+import com.proyecto.MarketDelivery.service.EmprendimientoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,24 +12,39 @@ import java.util.List;
 @RequestMapping("/api/emprendimientos")
 public class EmprendimientoController {
 
-    private final EmprendimientoRepository repo;
-    public EmprendimientoController(EmprendimientoRepository repo){ this.repo = repo; }
+    @Autowired
+    private EmprendimientoService emprendimientoService;
 
     @GetMapping
-    public List<Emprendimiento> all(){ return repo.findAll(); }
+    public List<Emprendimiento> getAllEmprendimientos() {
+        return emprendimientoService.getAllEmprendimientos();
+    }
 
     @GetMapping("/{id}")
-    public Emprendimiento get(@PathVariable Integer id){ return repo.findById(id).orElse(null); }
+    public ResponseEntity<Emprendimiento> getEmprendimientoById(@PathVariable int id) {
+        return emprendimientoService.getEmprendimientoById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping
-    public Emprendimiento create(@RequestBody Emprendimiento e){ return repo.save(e); }
+    public Emprendimiento createEmprendimiento(@RequestBody Emprendimiento emprendimiento) {
+        return emprendimientoService.saveEmprendimiento(emprendimiento);
+    }
 
     @PutMapping("/{id}")
-    public Emprendimiento update(@PathVariable Integer id, @RequestBody Emprendimiento e){
-        e.setId(id);
-        return repo.save(e);
+    public ResponseEntity<Emprendimiento> updateEmprendimiento(@PathVariable int id, @RequestBody Emprendimiento emprendimiento) {
+        return emprendimientoService.getEmprendimientoById(id)
+                .map(existing -> {
+                    emprendimiento.setId(id);
+                    return ResponseEntity.ok(emprendimientoService.saveEmprendimiento(emprendimiento));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){ repo.deleteById(id); }
+    public ResponseEntity<Void> deleteEmprendimiento(@PathVariable int id) {
+        emprendimientoService.deleteEmprendimiento(id);
+        return ResponseEntity.noContent().build();
+    }
 }
