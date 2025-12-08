@@ -1,12 +1,13 @@
 package com.proyecto.MarketDelivery.config;
 
 import com.proyecto.MarketDelivery.security.UserDetailsServiceImpl;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -24,29 +25,35 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
 
             .authorizeHttpRequests(authz -> authz
-                // 🔥 RUTAS PÚBLICAS (ESTO SOLUCIONA EL CSS)
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                // 🔥 Recursos estáticos accesibles sin login
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()
 
-                // 🔥 Rutas accesibles sin login
-                .requestMatchers("/", "/register", "/login").permitAll()
+                // 🔥 Rutas públicas
+                .requestMatchers("/", "/home", "/register", "/login", "/api/usuarios/register").permitAll()
+
+                // 🔐 Rutas protegidas por rol
+                .requestMatchers("/emprendedor/**").hasRole("EMPRENDEDOR")
+                .requestMatchers("/cliente/**").hasRole("CLIENTE")
+                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR") // 🔥 nuevo
 
                 // 🔐 Todo lo demás requiere autenticación
                 .anyRequest().authenticated()
             )
 
             .formLogin(form -> form
-                .loginPage("/login")                       // Página personalizada
-                .defaultSuccessUrl("/dashboard", true)     // A dónde ir tras login
+                .loginPage("/login")                       // Página personalizada de login
+                .defaultSuccessUrl("/dashboard", true)     // Redirección tras login exitoso
                 .permitAll()
             )
 
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/")                     // Redirección tras logout
                 .permitAll()
             )
 
-            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // Para consola H2
+            // Para permitir acceso a la consola H2 (si la usas)
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
         return http.build();
     }
@@ -62,5 +69,4 @@ public class SecurityConfig {
         authBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authBuilder.build();
     }
-
 }

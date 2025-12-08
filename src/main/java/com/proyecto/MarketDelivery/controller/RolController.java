@@ -15,36 +15,49 @@ public class RolController {
     @Autowired
     private RolService rolService;
 
+    // Obtener todos los roles
     @GetMapping
     public List<Rol> getAllRoles() {
         return rolService.getAllRoles();
     }
 
+    // Obtener rol por ID
     @GetMapping("/{id}")
     public ResponseEntity<Rol> getRolById(@PathVariable Long id) {
-        return rolService.getRolById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        try {
+            Rol rol = rolService.getRolById(id);
+            return ResponseEntity.ok(rol);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    // Crear nuevo rol
     @PostMapping
     public Rol createRol(@RequestBody Rol rol) {
         return rolService.saveRol(rol);
     }
 
+    // Actualizar rol existente
     @PutMapping("/{id}")
     public ResponseEntity<Rol> updateRol(@PathVariable Long id, @RequestBody Rol rol) {
-        return rolService.getRolById(id)
-                .map(existing -> {
-                    rol.setId(id);
-                    return ResponseEntity.ok(rolService.saveRol(rol));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        try {
+            Rol existing = rolService.getRolById(id);
+            rol.setId(id); // ahora sí compila porque setId(Long id) existe
+            return ResponseEntity.ok(rolService.saveRol(rol));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    // Eliminar rol por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRol(@PathVariable Long id) {
-        rolService.deleteRol(id);
-        return ResponseEntity.noContent().build();
+        try {
+            rolService.deleteRol(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

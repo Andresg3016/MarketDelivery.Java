@@ -8,49 +8,32 @@
 </head>
 <body>
 <div class="container">
+    <!-- Panel izquierdo -->
     <div class="left-panel">
         <h1>🚀 Panel Emprendedor</h1>
-        <p>Bienvenido <span th:text="${usuario.nombre1}">Nombre</span>, gestiona tus emprendimientos aquí.</p>
+        <p>
+            Bienvenido <span th:text="${usuario.nombre1}">Nombre</span>, 
+            gestiona tus emprendimientos, productos y servicios aquí.
+        </p>
 
+        <!-- Mensajes -->
         <div th:if="${error}" class="error-msg" th:text="${error}"></div>
         <div th:if="${success}" class="success-msg" th:text="${success}"></div>
 
-        <div class="form-section">
-            <h2 th:text="${emprendimiento.id == null} ? 'Crear nuevo emprendimiento' : 'Editar emprendimiento'">Formulario</h2>
-            <form th:action="${emprendimiento.id == null} ? @{/emprendedor/emprendimiento} : @{'/emprendedor/emprendimiento/editar/' + ${emprendimiento.id}}"
-                  th:object="${emprendimiento}" method="post">
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" th:field="*{nombre}" placeholder="Nombre del producto o servicio" required>
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea th:field="*{descripcion}" placeholder="Descripción..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Tipo</label>
-                    <select th:field="*{tipo}" required>
-                        <option th:each="tipo : ${tipos}" th:value="${tipo}" th:text="${tipo}" th:selected="${tipo.equals(emprendimiento.tipo)}"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Ciudad</label>
-                    <input type="text" th:field="*{ciudad}" placeholder="Ciudad" required>
-                </div>
-                <div class="form-group">
-                    <label>Dirección</label>
-                    <input type="text" th:field="*{direccion}" placeholder="Dirección" required>
-                </div>
-                <div class="form-group">
-                    <label>Teléfono</label>
-                    <input type="text" th:field="*{telefono}" placeholder="Teléfono">
-                </div>
-                <button type="submit" th:text="${emprendimiento.id == null} ? 'Crear' : 'Actualizar'">Enviar</button>
-            </form>
+        <!-- Accesos rápidos -->
+        <div class="dashboard-links">
+            <h2>Gestión rápida</h2>
+            <ul>
+                <li><a th:href="@{/emprendedor/emprendimientos}">📂 Mis Emprendimientos</a></li>
+                <li><a th:href="@{/emprendedor/productos}">📦 Mis Productos</a></li>
+                <li><a th:href="@{/emprendedor/servicios}">🛠️ Mis Servicios</a></li>
+            </ul>
         </div>
 
+        <!-- Listado de emprendimientos -->
         <div class="emprendimientos-list">
             <h2>Tus emprendimientos</h2>
+            <a th:href="@{/emprendedor/emprendimientos/nuevo}">➕ Crear nuevo</a>
             <ul>
                 <li th:each="empr : ${emprendimientos}">
                     <strong th:text="${empr.nombre}">Nombre</strong>
@@ -59,15 +42,45 @@
                     <p><strong>Ciudad:</strong> <span th:text="${empr.ciudad}"></span></p>
                     <p><strong>Dirección:</strong> <span th:text="${empr.direccion}"></span></p>
                     <p><strong>Teléfono:</strong> <span th:text="${empr.telefono}"></span></p>
-                    <a th:href="@{'/emprendedor/emprendimiento/editar/' + ${empr.id}}">Editar</a>
-                    <form th:action="@{'/emprendedor/emprendimiento/eliminar/' + ${empr.id}}" method="post" style="display:inline;">
-                        <button type="submit">Eliminar</button>
-                    </form>
+                    <a th:href="@{'/emprendedor/emprendimientos/editar/' + ${empr.id}}">✏️ Editar</a>
+                    <a th:href="@{'/emprendedor/emprendimientos/eliminar/' + ${empr.id}}">🗑️ Eliminar</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Listado de productos -->
+        <div class="productos-list">
+            <h2>Tus productos</h2>
+            <a th:href="@{/emprendedor/productos/nuevo}">➕ Crear nuevo</a>
+            <ul>
+                <li th:each="p : ${productos}">
+                    <strong th:text="${p.nombre}">Nombre</strong>
+                    <p th:text="${p.descripcion}">Descripción</p>
+                    <p><strong>Precio:</strong> <span th:text="${p.valorUnitario}"></span></p>
+                    <a th:href="@{'/emprendedor/productos/editar/' + ${p.id}}">✏️ Editar</a>
+                    <a th:href="@{'/emprendedor/productos/eliminar/' + ${p.id}}">🗑️ Eliminar</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Listado de servicios -->
+        <div class="servicios-list">
+            <h2>Tus servicios</h2>
+            <a th:href="@{/emprendedor/servicios/nuevo}">➕ Crear nuevo</a>
+            <ul>
+                <li th:each="s : ${servicios}">
+                    <strong th:text="${s.descripcion}">Nombre</strong>
+                    <p th:text="${s.descripcion}">Descripción</p>
+                    <!-- Si tu entidad Servicio tiene un campo precio -->
+                    <p><strong>Precio:</strong> <span th:text="${s.precio}"></span></p>
+                    <a th:href="@{'/emprendedor/servicios/editar/' + ${s.id}}">✏️ Editar</a>
+                    <a th:href="@{'/emprendedor/servicios/eliminar/' + ${s.id}}">🗑️ Eliminar</a>
                 </li>
             </ul>
         </div>
     </div>
 
+    <!-- Panel derecho -->
     <div class="right-panel">
         <h2>Perfil personal</h2>
         <form th:action="@{/usuario/actualizar}" th:object="${usuario}" method="post">
@@ -105,6 +118,10 @@
             </div>
             <button type="submit">Actualizar perfil</button>
         </form>
+
+        <div class="logout">
+            <a th:href="@{/logout}">Cerrar sesión</a>
+        </div>
     </div>
 </div>
 </body>

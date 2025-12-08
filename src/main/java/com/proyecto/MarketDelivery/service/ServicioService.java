@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ServicioService {
@@ -14,19 +13,24 @@ public class ServicioService {
     @Autowired
     private ServicioRepository servicioRepository;
 
+    // Obtener todos los servicios
     public List<Servicio> getAllServicios() {
         return servicioRepository.findAll();
     }
 
-    public Optional<Servicio> getServicioById(int id) {
-        return servicioRepository.findById(id);
+    // Obtener servicio por ID (Long)
+    public Servicio getServicioById(Long id) {
+        return servicioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado con id: " + id));
     }
 
+    // Guardar servicio
     public Servicio saveServicio(Servicio servicio) {
         return servicioRepository.save(servicio);
     }
 
-    public void deleteServicio(int id) {
+    // Eliminar servicio por ID (Long)
+    public void deleteServicio(Long id) {
         servicioRepository.deleteById(id);
     }
 }

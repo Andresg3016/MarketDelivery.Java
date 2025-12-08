@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>🛠️ Mis Servicios</h1>
+    <a th:href="@{/emprendedor/servicios/nuevo}">➕ Crear nuevo servicio</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${servicios}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.nombre}"></td>
+                <td th:text="${s.precio}"></td>
+                <td th:text="${s.descripcion}"></td>
+                <td>
+                    <a th:href="@{'/emprendedor/servicios/editar/' + ${s.id}}">✏️ Editar</a>
+                    <a th:href="@{'/emprendedor/servicios/eliminar/' + ${s.id}}">🗑️ Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

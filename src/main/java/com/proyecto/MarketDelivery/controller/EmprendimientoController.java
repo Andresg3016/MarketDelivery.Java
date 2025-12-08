@@ -3,48 +3,56 @@ package com.proyecto.MarketDelivery.controller;
 import com.proyecto.MarketDelivery.model.Emprendimiento;
 import com.proyecto.MarketDelivery.service.EmprendimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/emprendimientos")
+@Controller
+@RequestMapping("/emprendedor/emprendimientos")
 public class EmprendimientoController {
 
     @Autowired
     private EmprendimientoService emprendimientoService;
 
+    // Listar todos los emprendimientos
     @GetMapping
-    public List<Emprendimiento> getAllEmprendimientos() {
-        return emprendimientoService.getAllEmprendimientos();
+    public String listarEmprendimientos(Model model) {
+        List<Emprendimiento> emprendimientos = emprendimientoService.getAllEmprendimientos();
+        model.addAttribute("emprendimientos", emprendimientos);
+        return "emprendedor-emprendimientos"; // Vista Thymeleaf para listado
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Emprendimiento> getEmprendimientoById(@PathVariable int id) {
-        return emprendimientoService.getEmprendimientoById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    // Formulario para crear un nuevo emprendimiento
+    @GetMapping("/nuevo")
+    public String nuevoEmprendimientoForm(Model model) {
+        model.addAttribute("emprendimiento", new Emprendimiento());
+        model.addAttribute("tipos", List.of("Producto", "Servicio")); // ejemplo de tipos
+        return "emprendimiento_form"; // 🔥 usa tu archivo existente
     }
 
+    // Guardar emprendimiento (crear o actualizar)
     @PostMapping
-    public Emprendimiento createEmprendimiento(@RequestBody Emprendimiento emprendimiento) {
-        return emprendimientoService.saveEmprendimiento(emprendimiento);
+    public String guardarEmprendimiento(@ModelAttribute Emprendimiento emprendimiento) {
+        emprendimientoService.saveEmprendimiento(emprendimiento);
+        return "redirect:/emprendedor/emprendimientos";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Emprendimiento> updateEmprendimiento(@PathVariable int id, @RequestBody Emprendimiento emprendimiento) {
-        return emprendimientoService.getEmprendimientoById(id)
-                .map(existing -> {
-                    emprendimiento.setId(id);
-                    return ResponseEntity.ok(emprendimientoService.saveEmprendimiento(emprendimiento));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    // Formulario para editar emprendimiento
+    @GetMapping("/editar/{id}")
+    public String editarEmprendimiento(@PathVariable int id, Model model) {
+        Emprendimiento emprendimiento = emprendimientoService.getEmprendimientoById(id)
+                .orElseThrow(() -> new RuntimeException("Emprendimiento no encontrado"));
+        model.addAttribute("emprendimiento", emprendimiento);
+        model.addAttribute("tipos", List.of("Producto", "Servicio")); // ejemplo de tipos
+        return "emprendimiento_form"; // 🔥 reutiliza tu formulario
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmprendimiento(@PathVariable int id) {
+    // Eliminar emprendimiento
+    @GetMapping("/eliminar/{id}")
+    public String eliminarEmprendimiento(@PathVariable int id) {
         emprendimientoService.deleteEmprendimiento(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/emprendedor/emprendimientos";
     }
 }

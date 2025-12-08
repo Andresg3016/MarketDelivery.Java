@@ -3,48 +3,54 @@ package com.proyecto.MarketDelivery.controller;
 import com.proyecto.MarketDelivery.model.Producto;
 import com.proyecto.MarketDelivery.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/productos")
+@Controller
+@RequestMapping("/emprendedor/productos")
 public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
 
+    // Listar productos
     @GetMapping
-    public List<Producto> getAllProductos() {
-        return productoService.getAllProductos();
+    public String listarProductos(Model model) {
+        List<Producto> productos = productoService.getAllProductos();
+        model.addAttribute("productos", productos);
+        return "emprendedor-productos"; // Vista Thymeleaf
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Producto> getProductoById(@PathVariable int id) {
-        return productoService.getProductoById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    // Formulario para crear producto
+    @GetMapping("/nuevo")
+    public String nuevoProductoForm(Model model) {
+        model.addAttribute("producto", new Producto());
+        return "producto_form"; // Vista Thymeleaf
     }
 
+    // Guardar producto
     @PostMapping
-    public Producto createProducto(@RequestBody Producto producto) {
-        return productoService.saveProducto(producto);
+    public String guardarProducto(@ModelAttribute Producto producto) {
+        productoService.saveProducto(producto);
+        return "redirect:/emprendedor/productos";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Producto> updateProducto(@PathVariable int id, @RequestBody Producto producto) {
-        return productoService.getProductoById(id)
-                .map(existing -> {
-                    producto.setId(id);
-                    return ResponseEntity.ok(productoService.saveProducto(producto));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    // Formulario para editar producto
+    @GetMapping("/editar/{id}")
+    public String editarProducto(@PathVariable int id, Model model) {
+        Producto producto = productoService.getProductoById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        model.addAttribute("producto", producto);
+        return "producto_form"; // Reutilizamos el mismo formulario
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProducto(@PathVariable int id) {
+    // Eliminar producto
+    @GetMapping("/eliminar/{id}")
+    public String eliminarProducto(@PathVariable int id) {
         productoService.deleteProducto(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/emprendedor/productos";
     }
 }

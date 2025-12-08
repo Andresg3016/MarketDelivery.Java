@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CatalogoService {
@@ -14,19 +13,24 @@ public class CatalogoService {
     @Autowired
     private CatalogoRepository catalogoRepository;
 
+    // Obtener todos los catálogos
     public List<Catalogo> getAllCatalogos() {
         return catalogoRepository.findAll();
     }
 
-    public Optional<Catalogo> getCatalogoById(int id) {
-        return catalogoRepository.findById(id);
+    // Obtener catálogo por ID (Long)
+    public Catalogo getCatalogoById(Long id) {
+        return catalogoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Catálogo no encontrado con id: " + id));
     }
 
+    // Guardar catálogo
     public Catalogo saveCatalogo(Catalogo c) {
         return catalogoRepository.save(c);
     }
 
-    public void deleteCatalogo(int id) {
+    // Eliminar catálogo por ID (Long)
+    public void deleteCatalogo(Long id) {
         catalogoRepository.deleteById(id);
     }
 }

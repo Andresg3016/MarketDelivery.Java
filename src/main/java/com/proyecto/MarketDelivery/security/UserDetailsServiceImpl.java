@@ -22,15 +22,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Usuario> optionalUser = usuarioRepository.findByUserName(username);
+        Optional<Usuario> optionalUser = usuarioRepository.findByUsername(username);
         Usuario u = optionalUser.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         var authorities = (u.getRoles() == null || u.getRoles().isEmpty())
                 ? java.util.Collections.emptyList()
                 : u.getRoles().stream()
-                    .map(r -> new SimpleGrantedAuthority(r.getNombre()))
+                    .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getNombre())) // 🔥 prefijo ROLE_
                     .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(u.getUsername(), u.getPassword(), (Collection<? extends GrantedAuthority>) authorities);
+        return new org.springframework.security.core.userdetails.User(
+                u.getUsername(),
+                u.getPassword(),
+                (Collection<? extends GrantedAuthority>) authorities
+        );
     }
 }

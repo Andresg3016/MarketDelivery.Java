@@ -1,6 +1,7 @@
 package com.proyecto.MarketDelivery.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "emprendimientos")
@@ -9,35 +10,36 @@ public class Emprendimiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Emprendimiento")
-    private Integer id;
+    private Long id; // Consistencia con otras entidades
 
     @Column(name = "Nombre_Emprendimiento", nullable = false)
     private String nombre;
 
-    @Column(name = "Tipo_Emprendimiento", nullable = false)
+    @Column(name = "tipo_emprendimiento", nullable = false)
     private String tipo;
 
-    @Column(name = "Descripcion", columnDefinition = "TEXT")
+    @Column(name = "Descripcion")
     private String descripcion;
 
-    @Column(name = "Ciudad", nullable = false)
+    @Column(name = "ciudad", nullable = false)
     private String ciudad;
 
     @Column(name = "Direccion", nullable = false)
     private String direccion;
 
-    @Column(name = "Telefono")
+    @Column(name = "telefono")
     private String telefono;
 
-    // Relación correcta: cada emprendimiento pertenece a un usuario
     @ManyToOne
-    @JoinColumn(name = "Usuario_Id_Usuario")
+    @JoinColumn(name = "Usuario_Id_Usuario", nullable = false)
     private Usuario usuario;
 
-    public Emprendimiento() {}
+    @OneToMany(mappedBy = "emprendimiento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Servicio> servicios;
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -59,4 +61,7 @@ public class Emprendimiento {
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+
+    public List<Servicio> getServicios() { return servicios; }
+    public void setServicios(List<Servicio> servicios) { this.servicios = servicios; }
 }

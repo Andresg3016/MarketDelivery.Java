@@ -1,72 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MarketDelivery</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    
     <div class="container">
         <div class="left-panel">
             <h1>🚀 MarketDelivery</h1>
             <p>Inicia sesión para gestionar tus emprendimientos o regístrate si aún no tienes cuenta.</p>
         </div>
         <div class="right-panel">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('login')">Iniciar Sesión</button>
-        <button class="tab-btn" onclick="switchTab('register')">Registrarse</button>
-    </div>
-    
-    <!-- Login Form -->
-    <div id="login" class="form-section active">
-        <form th:action="@{/register}" th:object="${usuario}" method="post">
-    <input type="email" th:field="*{email}" required>
-    <input type="password" th:field="*{password}" required>
-    <input type="password" th:field="*{confirmPassword}" required>
-    <select th:field="*{rolSeleccionado}" required>
-        <option value="CLIENTE">Cliente</option>
-        <option value="EMPRENDEDOR">Emprendedor</option>
-    </select>
-    <button type="submit">Registrarse</button>
-</form>
-
-        <div class="toggle-text">
-            ¿No tienes cuenta? <a onclick="switchTab('register')">Regístrate aquí</a>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Iniciar Sesión</button>
+                <button class="tab-btn" onclick="switchTab('register')">Registrarse</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login" class="form-section active">
+                <form th:action="@{/authenticate}" method="post">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="tu@email.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" placeholder="••••••••" required />
+                    </div>
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+                <div class="toggle-text">
+                    ¿No tienes cuenta? <a href="javascript:void(0);" onclick="switchTab('register')">Regístrate aquí</a>
+                </div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register" class="form-section">
+                <form th:action="@{/register}" method="post">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="tu@email.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" placeholder="••••••••" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" name="confirmPassword" placeholder="••••••••" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Rol</label>
+                        <select name="rol" required>
+                            <option value="">Selecciona un rol</option>
+                            <option value="CLIENTE">Cliente</option>
+                            <option value="EMPRENDEDOR">Emprendedor</option>
+                        </select>
+                    </div>
+                    <button type="submit">Registrarse</button>
+                </form>
+                <div class="toggle-text">
+                    ¿Ya tienes cuenta? <a href="javascript:void(0);" onclick="switchTab('login')">Inicia sesión aquí</a>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <!-- Register Form -->
-    <div id="register" class="form-section">
-        <form th:action="@{/register}" th:object="${usuario}" method="post">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" th:field="*{email}" placeholder="tu@email.com" required>
-            </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <input type="password" th:field="*{password}" placeholder="••••••••" required>
-            </div>
-            <div class="form-group">
-                <label>Confirmar Contraseña</label>
-                <input type="password" th:field="*{confirmPassword}" placeholder="••••••••" required>
-            </div>
-            <div class="form-group">
-                <label>Rol</label>
-                <select th:field="*{rol}" required>
-                    <option value="CLIENTE">Cliente</option>
-                    <option value="EMPRENDEDOR">Emprendedor</option>
-                </select>
-            </div>
-            <button type="submit">Registrarse</button>
-        </form>
-        <div class="toggle-text">
-            ¿Ya tienes cuenta? <a onclick="switchTab('login')">Inicia sesión aquí</a>
-        </div>
-    </div>
-</div>
-
     </div>
 
     <script>
@@ -77,6 +76,5 @@
             document.querySelector(".tab-btn[onclick=\"switchTab('" + id + "')\"]").classList.add('active');
         }
     </script>
-
 </body>
 </html>

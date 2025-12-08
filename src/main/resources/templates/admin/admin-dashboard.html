@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administrador - MarketDelivery</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>⚙️ Panel Administrador</h1>
+    <p>Bienvenido <span th:text="${usuario.nombre1}">Nombre</span>, aquí puedes gestionar usuarios, roles y el sistema.</p>
+
+    <!-- Mensajes -->
+    <div th:if="${error}" class="error-msg" th:text="${error}"></div>
+    <div th:if="${success}" class="success-msg" th:text="${success}"></div>
+
+    <!-- Accesos rápidos -->
+    <div class="dashboard-links">
+        <h2>Gestión rápida</h2>
+        <ul>
+            <li><a th:href="@{/admin/usuarios}">👥 Usuarios</a></li>
+            <li><a th:href="@{/admin/roles}">🔑 Roles</a></li>
+            <li><a th:href="@{/admin/reportes}">📊 Reportes</a></li>
+        </ul>
+    </div>
+
+    <!-- Listado de usuarios -->
+    <div class="usuarios-list">
+        <h2>Usuarios registrados</h2>
+        <a th:href="@{/admin/usuarios/nuevo}">➕ Crear nuevo</a>
+        <ul>
+            <li th:each="u : ${usuarios}">
+                <strong th:text="${u.username}">Username</strong>
+                <p th:text="${u.email}">Email</p>
+                <p><strong>Rol:</strong> <span th:text="${#lists.join(u.roles, ',')}"></span></p>
+                <a th:href="@{'/admin/usuarios/editar/' + ${u.id}}">✏️ Editar</a>
+                <a th:href="@{'/admin/usuarios/eliminar/' + ${u.id}}">🗑️ Eliminar</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="logout">
+        <a th:href="@{/logout}">Cerrar sesión</a>
+    </div>
+</div>
+</body>
+</html>

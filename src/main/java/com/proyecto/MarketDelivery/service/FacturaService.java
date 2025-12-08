@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FacturaService {
@@ -18,8 +17,8 @@ public class FacturaService {
         return facturaRepository.findAll();
     }
 
-    public Optional<Factura> getFacturaById(Integer id) {
-        return facturaRepository.findById(id);
+    public Factura getFacturaById(Integer id) {
+        return facturaRepository.findById(id).orElse(null);
     }
 
     public Factura saveFactura(Factura f) {

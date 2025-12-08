@@ -1,42 +1,45 @@
 package com.proyecto.MarketDelivery.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Usuario")
-    private Integer id;
+    private Long id; // mejor usar Long para consistencia con Rol
 
-    @Column(name = "Nombre1_usuario")
+    @Column(name = "nombre1_usuario")
     private String nombre1;
 
-    @Column(name = "Nombre2_usuario")
+    @Column(name = "nombre2_usuario")
     private String nombre2;
 
-    @Column(name = "Apellido1_usuario")
+    @Column(name = "apellido1_usuario")
     private String apellido1;
 
-    @Column(name = "Apellido2_usuario")
+    @Column(name = "apellido2_usuario")
     private String apellido2;
 
-    @Column(name = "Cedula_usuario")
+    @Column(name = "cedula_usuario")
     private String cedula;
 
-    @Column(name = "Email_usuario")
+    @Column(name = "email_usuario")
     private String email;
 
-    @Column(name = "Telefono_usuario")
+    @Column(name = "telefono_usuario")
     private String telefono;
 
-    @Column(name = "Direccion_usuario")
+    @Column(name = "direccion_usuario")
     private String direccion;
 
-    @Column(name = "user_name", nullable = false)
-    private String username;
+    @Column(name = "user_name", nullable = false, unique = true)
+    private String username; // coincide con th:field="*{username}"
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -54,17 +57,17 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Resena> resenas;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "usuario_roles",
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
-    private List<Rol> roles;
+    private Set<Rol> roles = new HashSet<>();
 
     // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getNombre1() { return nombre1; }
     public void setNombre1(String nombre1) { this.nombre1 = nombre1; }
@@ -108,6 +111,6 @@ public class Usuario {
     public List<Resena> getResenas() { return resenas; }
     public void setResenas(List<Resena> resenas) { this.resenas = resenas; }
 
-    public List<Rol> getRoles() { return roles; }
-    public void setRoles(List<Rol> roles) { this.roles = roles; }
+    public Set<Rol> getRoles() { return roles; }
+    public void setRoles(Set<Rol> roles) { this.roles = roles; }
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Cliente - MarketDelivery</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>🛒 Panel Cliente</h1>
+    <p>Bienvenido <span th:text="${usuario.nombre1}">Nombre</span>, aquí puedes gestionar tus compras y pedidos.</p>
+
+    <!-- Mensajes -->
+    <div th:if="${error}" class="error-msg" th:text="${error}"></div>
+    <div th:if="${success}" class="success-msg" th:text="${success}"></div>
+
+    <!-- Accesos rápidos -->
+    <div class="dashboard-links">
+        <h2>Gestión rápida</h2>
+        <ul>
+            <li><a th:href="@{/cliente/catalogos}">📂 Catálogos disponibles</a></li>
+            <li><a th:href="@{/cliente/productos}">📦 Productos</a></li>
+            <li><a th:href="@{/cliente/pedidos}">🧾 Mis pedidos</a></li>
+        </ul>
+    </div>
+
+    <!-- Listado de pedidos -->
+    <div class="pedidos-list">
+        <h2>Mis pedidos</h2>
+        <ul>
+            <li th:each="pedido : ${pedidos}">
+                <strong th:text="${pedido.id}">Pedido #</strong>
+                <p th:text="${pedido.estado}">Estado</p>
+                <p><strong>Total:</strong> <span th:text="${pedido.total}"></span></p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="logout">
+        <a th:href="@{/logout}">Cerrar sesión</a>
+    </div>
+</div>
+</body>
+</html>

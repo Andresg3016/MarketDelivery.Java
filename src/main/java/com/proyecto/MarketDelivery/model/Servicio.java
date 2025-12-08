@@ -1,16 +1,16 @@
 package com.proyecto.MarketDelivery.model;
 
-
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "servicios")
 public class Servicio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Servicio")
-    private Integer id;
+    private Long id; // Consistencia con otras entidades
 
     @Column(name = "Descripcion", nullable = false)
     private String descripcion;
@@ -23,19 +23,19 @@ public class Servicio {
     @JoinColumn(name = "Catalogo_Id_Catalogo", nullable = false)
     private Catalogo catalogo;
 
-    @OneToMany(mappedBy = "servicio")
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Agenda> agendas;
 
-    @OneToMany(mappedBy = "servicio")
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Carrito> carritos;
 
-    // Commented to avoid circular dependency: Servicio <-> Factura
+    // Relación con Factura (opcional, descomentar si se necesita)
     // @OneToMany(mappedBy = "servicio")
     // private List<Factura> facturas;
 
     // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
@@ -52,7 +52,6 @@ public class Servicio {
     public List<Carrito> getCarritos() { return carritos; }
     public void setCarritos(List<Carrito> carritos) { this.carritos = carritos; }
 
-    // Commented to avoid circular dependency: Servicio <-> Factura
     // public List<Factura> getFacturas() { return facturas; }
     // public void setFacturas(List<Factura> facturas) { this.facturas = facturas; }
 }

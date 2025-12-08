@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${servicio.id == null} ? 'Nuevo Servicio' : 'Editar Servicio'">Servicio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${servicio.id == null} ? 'Crear Servicio' : 'Editar Servicio'"></h1>
+
+    <form th:action="@{/emprendedor/servicios}" th:object="${servicio}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" th:field="*{nombre}" placeholder="Nombre del servicio" required>
+        </div>
+
+        <div class="form-group">
+            <label>Precio</label>
+            <input type="number" step="0.01" th:field="*{precio}" placeholder="Precio" required>
+        </div>
+
+        <div class="form-group">
+            <label>Descripción</label>
+            <textarea th:field="*{descripcion}" placeholder="Descripción..." required></textarea>
+        </div>
+
+        <button type="submit" th:text="${servicio.id == null} ? 'Crear' : 'Actualizar'">Guardar</button>
+    </form>
+</div>
+</body>
+</html>
