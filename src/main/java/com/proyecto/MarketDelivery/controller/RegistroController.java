@@ -28,8 +28,8 @@ public class RegistroController {
     @GetMapping("/register")
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("usuario", new Usuario());
-        model.addAttribute("roles", rolService.getAllRoles()); // lista de roles desde BD
-        return "registro"; // archivo HTML en templates
+        model.addAttribute("roles", rolService.getAllRoles());
+        return "home";
     }
 
     // Procesar registro
@@ -43,21 +43,23 @@ public class RegistroController {
             model.addAttribute("error", "Las contraseñas no coinciden");
             model.addAttribute("usuario", usuario);
             model.addAttribute("roles", rolService.getAllRoles());
-            return "registro";
+            return "home";
         }
 
         try {
-            Rol rolAsignado = rolService.findByNombre(rol); // busca el rol por nombre
+            Rol rolAsignado = rolService.findByNombre(rol);
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuario.setRoles(Set.of(rolAsignado));
             usuarioService.saveUsuario(usuario);
             model.addAttribute("success", "Usuario registrado correctamente");
-            return "redirect:/login";
+            model.addAttribute("usuario", new Usuario());
+            model.addAttribute("roles", rolService.getAllRoles());
+            return "home";
         } catch (RuntimeException e) {
             model.addAttribute("error", "Error al registrar usuario: " + e.getMessage());
             model.addAttribute("usuario", usuario);
             model.addAttribute("roles", rolService.getAllRoles());
-            return "registro";
+            return "home";
         }
     }
 }

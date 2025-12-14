@@ -3,38 +3,26 @@ package com.proyecto.MarketDelivery.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "rol")
 public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_rol")
+    private Integer id;
 
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre_rol", nullable = false, unique = true)
     private String nombre;
 
-    // Constructor vacío
     public Rol() {}
 
-    // Constructor con nombre
     public Rol(String nombre) {
         this.nombre = nombre;
     }
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }

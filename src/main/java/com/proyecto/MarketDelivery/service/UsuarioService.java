@@ -40,7 +40,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario getUsuarioById(Long id) {
+    public Usuario getUsuarioById(Integer id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
     }
@@ -49,7 +49,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public void deleteUsuario(Long id) {
+    public void deleteUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
 

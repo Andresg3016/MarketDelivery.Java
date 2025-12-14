@@ -4,34 +4,40 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "productos")
+@Table(name = "producto")
 public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Producto")
-    private Long id; // Consistencia con otras entidades
+    @Column(name = "id_producto")
+    private Long id;
 
-    @Column(name = "Nombre", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "Valor_Unitario", nullable = false)
+    @Column(name = "valor_unitario", nullable = false)
     private BigDecimal valorUnitario;
 
-    @Column(name = "Descripción")
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "Stock")
+    @Column(name = "stock")
     private Integer stock;
 
-    // Relación con Catalogo
     @ManyToOne
-    @JoinColumn(name = "Catalogo_Id_Catalogo", nullable = false)
+    @JoinColumn(name = "catalogo_id", nullable = false)
     private Catalogo catalogo;
+
+    @ManyToOne
+    @JoinColumn(name = "emprendimiento_id", nullable = false)
+    private Emprendimiento emprendimiento;
+
+    @ManyToOne
+    @JoinColumn(name = "promocion_id")
+    private Promocion promocion;
 
     public Producto() {}
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -49,4 +55,10 @@ public class Producto {
 
     public Catalogo getCatalogo() { return catalogo; }
     public void setCatalogo(Catalogo catalogo) { this.catalogo = catalogo; }
+
+    public Emprendimiento getEmprendimiento() { return emprendimiento; }
+    public void setEmprendimiento(Emprendimiento emprendimiento) { this.emprendimiento = emprendimiento; }
+
+    public Promocion getPromocion() { return promocion; }
+    public void setPromocion(Promocion promocion) { this.promocion = promocion; }
 }

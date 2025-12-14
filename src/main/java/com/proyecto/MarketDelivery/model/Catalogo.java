@@ -9,34 +9,23 @@ public class Catalogo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Catalogo")
-    private Long id; // Consistencia con otras entidades
+    @Column(name = "id_catalogo")
+    private Long id;
 
-    @Column(name = "Descripcion")
-    private String descripcionCorta;
+    @Column(name = "descripcion")
+    private String descripcion;
 
-    @Column(name = "Descripcion_Larga")
+    @Column(name = "descripcion_larga")
     private String descripcionLarga;
 
-    @OneToMany(mappedBy = "catalogo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Producto> productos;
+    public Catalogo() {}
 
-    @OneToMany(mappedBy = "catalogo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Servicio> servicios;
-
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getDescripcionCorta() { return descripcionCorta; }
-    public void setDescripcionCorta(String descripcionCorta) { this.descripcionCorta = descripcionCorta; }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
     public String getDescripcionLarga() { return descripcionLarga; }
     public void setDescripcionLarga(String descripcionLarga) { this.descripcionLarga = descripcionLarga; }
-
-    public List<Producto> getProductos() { return productos; }
-    public void setProductos(List<Producto> productos) { this.productos = productos; }
-
-    public List<Servicio> getServicios() { return servicios; }
-    public void setServicios(List<Servicio> servicios) { this.servicios = servicios; }
 }

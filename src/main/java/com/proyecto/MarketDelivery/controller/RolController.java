@@ -23,7 +23,7 @@ public class RolController {
 
     // Obtener rol por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Rol> getRolById(@PathVariable Long id) {
+    public ResponseEntity<Rol> getRolById(@PathVariable Integer id) {
         try {
             Rol rol = rolService.getRolById(id);
             return ResponseEntity.ok(rol);
@@ -40,10 +40,10 @@ public class RolController {
 
     // Actualizar rol existente
     @PutMapping("/{id}")
-    public ResponseEntity<Rol> updateRol(@PathVariable Long id, @RequestBody Rol rol) {
+    public ResponseEntity<Rol> updateRol(@PathVariable Integer id, @RequestBody Rol rol) {
         try {
             Rol existing = rolService.getRolById(id);
-            rol.setId(id); // ahora sí compila porque setId(Long id) existe
+            rol.setId(id); // ahora sí compila porque setId(Integer id) existe
             return ResponseEntity.ok(rolService.saveRol(rol));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -52,7 +52,7 @@ public class RolController {
 
     // Eliminar rol por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRol(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRol(@PathVariable Integer id) {
         try {
             rolService.deleteRol(id);
             return ResponseEntity.noContent().build();

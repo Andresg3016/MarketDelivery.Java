@@ -1,9 +1,9 @@
 package com.proyecto.MarketDelivery.repository;
 
-import com.proyecto.MarketDelivery.model.Promocion;
+import com.proyecto.MarketDelivery.model.CarritoItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PromocionRepository extends JpaRepository<Promocion, Long> {
+public interface CarritoItemRepository extends JpaRepository<CarritoItem, Long> {
 }

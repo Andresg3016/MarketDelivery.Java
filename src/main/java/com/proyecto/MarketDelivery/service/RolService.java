@@ -19,7 +19,7 @@ public class RolService {
     }
 
     // Obtener rol por ID (Long)
-    public Rol getRolById(Long id) {
+    public Rol getRolById(Integer id) {
         return rolRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado con id: " + id));
     }
@@ -30,7 +30,7 @@ public class RolService {
     }
 
     // Eliminar rol por ID (Long)
-    public void deleteRol(Long id) {
+    public void deleteRol(Integer id) {
         rolRepository.deleteById(id);
     }
 

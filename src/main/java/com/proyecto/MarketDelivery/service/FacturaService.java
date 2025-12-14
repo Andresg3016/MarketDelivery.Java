@@ -17,7 +17,7 @@ public class FacturaService {
         return facturaRepository.findAll();
     }
 
-    public Factura getFacturaById(Integer id) {
+    public Factura getFacturaById(Long id) {
         return facturaRepository.findById(id).orElse(null);
     }
 
@@ -25,7 +25,7 @@ public class FacturaService {
         return facturaRepository.save(f);
     }
 
-    public void deleteFactura(Integer id) {
+    public void deleteFactura(Long id) {
         facturaRepository.deleteById(id);
     }
 }

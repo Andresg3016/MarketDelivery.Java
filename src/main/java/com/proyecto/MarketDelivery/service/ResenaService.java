@@ -18,7 +18,7 @@ public class ResenaService {
         return resenaRepository.findAll();
     }
 
-    public Optional<Resena> getReseñaById(int id) {
+    public Optional<Resena> getReseñaById(Long id) {
         return resenaRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class ResenaService {
         return resenaRepository.save(r);
     }
 
-    public void deleteReseña(int id) {
+    public void deleteReseña(Long id) {
         resenaRepository.deleteById(id);
     }
 }

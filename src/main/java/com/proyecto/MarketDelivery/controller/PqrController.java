@@ -21,7 +21,7 @@ public class PqrController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pqr> getPqrById(@PathVariable int id) {
+    public ResponseEntity<Pqr> getPqrById(@PathVariable Long id) {
         return pqrService.getPqrById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -33,7 +33,7 @@ public class PqrController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pqr> updatePqr(@PathVariable int id, @RequestBody Pqr pqr) {
+    public ResponseEntity<Pqr> updatePqr(@PathVariable Long id, @RequestBody Pqr pqr) {
         return pqrService.getPqrById(id)
                 .map(existing -> {
                     pqr.setId(id);
@@ -43,7 +43,7 @@ public class PqrController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePqr(@PathVariable int id) {
+    public ResponseEntity<Void> deletePqr(@PathVariable Long id) {
         pqrService.deletePqr(id);
         return ResponseEntity.noContent().build();
     }

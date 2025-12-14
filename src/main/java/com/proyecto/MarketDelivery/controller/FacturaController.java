@@ -21,7 +21,7 @@ public class FacturaController {
     }
 
     @GetMapping("/{id}")
-    public Factura getFacturaById(@PathVariable Integer id) {
+    public Factura getFacturaById(@PathVariable Long id) {
         return facturaService.getFacturaById(id);
     }
 
@@ -31,7 +31,7 @@ public class FacturaController {
     }
 
     @PutMapping("/{id}")
-    public Factura updateFactura(@PathVariable Integer id, @RequestBody Factura factura) {
+    public Factura updateFactura(@PathVariable Long id, @RequestBody Factura factura) {
         Factura existing = facturaService.getFacturaById(id);
         if (existing != null) {
             factura.setId(id);
@@ -41,7 +41,7 @@ public class FacturaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFactura(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteFactura(@PathVariable Long id) {
         facturaService.deleteFactura(id);
         return ResponseEntity.noContent().build();
     }

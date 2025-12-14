@@ -21,7 +21,7 @@ public class PromocionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Promocion> getPromocionById(@PathVariable int id) {
+    public ResponseEntity<Promocion> getPromocionById(@PathVariable Long id) {
         return promocionService.getPromocionById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -33,7 +33,7 @@ public class PromocionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Promocion> updatePromocion(@PathVariable int id, @RequestBody Promocion promocion) {
+    public ResponseEntity<Promocion> updatePromocion(@PathVariable Long id, @RequestBody Promocion promocion) {
         return promocionService.getPromocionById(id)
                 .map(existing -> {
                     promocion.setId(id);
@@ -43,7 +43,7 @@ public class PromocionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePromocion(@PathVariable int id) {
+    public ResponseEntity<Void> deletePromocion(@PathVariable Long id) {
         promocionService.deletePromocion(id);
         return ResponseEntity.noContent().build();
     }

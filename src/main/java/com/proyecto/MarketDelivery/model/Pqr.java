@@ -7,19 +7,20 @@ import jakarta.persistence.*;
 public class Pqr {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Pqr")
-    private Integer id;
+    @Column(name = "id_pqr")
+    private Long id;
 
-    @Column(name = "Descripcion_Pqr", nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(name = "Usuario_Id_Usuario", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Pqr() {}
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }

@@ -40,7 +40,7 @@ public class ProductoController {
 
     // Formulario para editar producto
     @GetMapping("/editar/{id}")
-    public String editarProducto(@PathVariable int id, Model model) {
+    public String editarProducto(@PathVariable Long id, Model model) {
         Producto producto = productoService.getProductoById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         model.addAttribute("producto", producto);
@@ -49,7 +49,7 @@ public class ProductoController {
 
     // Eliminar producto
     @GetMapping("/eliminar/{id}")
-    public String eliminarProducto(@PathVariable int id) {
+    public String eliminarProducto(@PathVariable Long id) {
         productoService.deleteProducto(id);
         return "redirect:/emprendedor/productos";
     }

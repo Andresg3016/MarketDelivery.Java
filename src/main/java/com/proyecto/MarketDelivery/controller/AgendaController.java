@@ -21,7 +21,7 @@ public class AgendaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Agenda> getAgendaById(@PathVariable int id) {
+    public ResponseEntity<Agenda> getAgendaById(@PathVariable Long id) {
         return agendaService.getAgendaById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -33,7 +33,7 @@ public class AgendaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Agenda> updateAgenda(@PathVariable int id, @RequestBody Agenda agenda) {
+    public ResponseEntity<Agenda> updateAgenda(@PathVariable Long id, @RequestBody Agenda agenda) {
         return agendaService.getAgendaById(id)
                 .map(existing -> {
                     agenda.setId(id);
@@ -43,7 +43,7 @@ public class AgendaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAgenda(@PathVariable int id) {
+    public ResponseEntity<Void> deleteAgenda(@PathVariable Long id) {
         agendaService.deleteAgenda(id);
         return ResponseEntity.noContent().build();
     }

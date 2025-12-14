@@ -18,7 +18,7 @@ public class PqrService {
         return pqrRepository.findAll();
     }
 
-    public Optional<Pqr> getPqrById(int id) {
+    public Optional<Pqr> getPqrById(Long id) {
         return pqrRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class PqrService {
         return pqrRepository.save(pqr);
     }
 
-    public void deletePqr(int id) {
+    public void deletePqr(Long id) {
         pqrRepository.deleteById(id);
     }
 }

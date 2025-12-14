@@ -8,28 +8,23 @@ import java.math.BigDecimal;
 public class Promocion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Promocion")
-    private Integer id;
+    @Column(name = "id_promocion")
+    private Long id;
 
-    @Column(name = "Descripcion", nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
     @Column(name = "porcentaje_descuento", nullable = false)
     private BigDecimal porcentajeDescuento;
 
-    @Column(name = "descripción", nullable = false)
-    private String descripcionLarga;
+    public Promocion() {}
 
-    // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
     public BigDecimal getPorcentajeDescuento() { return porcentajeDescuento; }
     public void setPorcentajeDescuento(BigDecimal porcentajeDescuento) { this.porcentajeDescuento = porcentajeDescuento; }
-
-    public String getDescripcionLarga() { return descripcionLarga; }
-    public void setDescripcionLarga(String descripcionLarga) { this.descripcionLarga = descripcionLarga; }
 }

@@ -1,39 +1,34 @@
+
 package com.proyecto.MarketDelivery.model;
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "servicios")
+@Table(name = "servicio")
 public class Servicio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Servicio")
-    private Long id; // Consistencia con otras entidades
+    @Column(name = "id_servicio")
+    private Long id;
 
-    @Column(name = "Descripcion", nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(name = "Emprendimiento_Id_Emprendimiento", nullable = false)
+    @JoinColumn(name = "emprendimiento_id", nullable = false)
     private Emprendimiento emprendimiento;
 
     @ManyToOne
-    @JoinColumn(name = "Catalogo_Id_Catalogo", nullable = false)
+    @JoinColumn(name = "catalogo_id", nullable = false)
     private Catalogo catalogo;
 
-    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Agenda> agendas;
+    @Column(name = "precio", nullable = false)
+    private BigDecimal precio;
 
-    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Carrito> carritos;
+    public Servicio() {}
 
-    // Relación con Factura (opcional, descomentar si se necesita)
-    // @OneToMany(mappedBy = "servicio")
-    // private List<Factura> facturas;
-
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -46,12 +41,6 @@ public class Servicio {
     public Catalogo getCatalogo() { return catalogo; }
     public void setCatalogo(Catalogo catalogo) { this.catalogo = catalogo; }
 
-    public List<Agenda> getAgendas() { return agendas; }
-    public void setAgendas(List<Agenda> agendas) { this.agendas = agendas; }
-
-    public List<Carrito> getCarritos() { return carritos; }
-    public void setCarritos(List<Carrito> carritos) { this.carritos = carritos; }
-
-    // public List<Factura> getFacturas() { return facturas; }
-    // public void setFacturas(List<Factura> facturas) { this.facturas = facturas; }
+    public BigDecimal getPrecio() { return precio; }
+    public void setPrecio(BigDecimal precio) { this.precio = precio; }
 }

@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "detalle_factura")
-public class DetalleFactura {
-
+@Table(name = "carrito_item")
+public class CarritoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_detalle")
+    @Column(name = "id_item")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "carrito_id", nullable = false)
+    private Carrito carrito;
 
     @ManyToOne
     @JoinColumn(name = "producto_id")
@@ -26,20 +29,16 @@ public class DetalleFactura {
     @Column(name = "precio_unitario", nullable = false)
     private BigDecimal precioUnitario;
 
-    @Column(name = "descuento")
-    private BigDecimal descuento;
-
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
 
-    @ManyToOne
-    @JoinColumn(name = "factura_id", nullable = false)
-    private Factura factura;
-
-    public DetalleFactura() {}
+    public CarritoItem() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public Carrito getCarrito() { return carrito; }
+    public void setCarrito(Carrito carrito) { this.carrito = carrito; }
 
     public Producto getProducto() { return producto; }
     public void setProducto(Producto producto) { this.producto = producto; }
@@ -53,12 +52,6 @@ public class DetalleFactura {
     public BigDecimal getPrecioUnitario() { return precioUnitario; }
     public void setPrecioUnitario(BigDecimal precioUnitario) { this.precioUnitario = precioUnitario; }
 
-    public BigDecimal getDescuento() { return descuento; }
-    public void setDescuento(BigDecimal descuento) { this.descuento = descuento; }
-
     public BigDecimal getSubtotal() { return subtotal; }
     public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
-
-    public Factura getFactura() { return factura; }
-    public void setFactura(Factura factura) { this.factura = factura; }
 }

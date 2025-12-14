@@ -41,7 +41,7 @@ public class EmprendimientoController {
 
     // Formulario para editar emprendimiento
     @GetMapping("/editar/{id}")
-    public String editarEmprendimiento(@PathVariable int id, Model model) {
+    public String editarEmprendimiento(@PathVariable Long id, Model model) {
         Emprendimiento emprendimiento = emprendimientoService.getEmprendimientoById(id)
                 .orElseThrow(() -> new RuntimeException("Emprendimiento no encontrado"));
         model.addAttribute("emprendimiento", emprendimiento);
@@ -51,7 +51,7 @@ public class EmprendimientoController {
 
     // Eliminar emprendimiento
     @GetMapping("/eliminar/{id}")
-    public String eliminarEmprendimiento(@PathVariable int id) {
+    public String eliminarEmprendimiento(@PathVariable Long id) {
         emprendimientoService.deleteEmprendimiento(id);
         return "redirect:/emprendedor/emprendimientos";
     }

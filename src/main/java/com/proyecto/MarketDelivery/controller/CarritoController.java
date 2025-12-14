@@ -21,7 +21,7 @@ public class CarritoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Carrito> getCarritoById(@PathVariable int id) {
+    public ResponseEntity<Carrito> getCarritoById(@PathVariable Integer id) {
         return carritoService.getCarritoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -33,7 +33,7 @@ public class CarritoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Carrito> updateCarrito(@PathVariable int id, @RequestBody Carrito carrito) {
+    public ResponseEntity<Carrito> updateCarrito(@PathVariable Integer id, @RequestBody Carrito carrito) {
         return carritoService.getCarritoById(id)
                 .map(existing -> {
                     carrito.setId(id);
@@ -43,7 +43,7 @@ public class CarritoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCarrito(@PathVariable int id) {
+    public ResponseEntity<Void> deleteCarrito(@PathVariable Integer id) {
         carritoService.deleteCarrito(id);
         return ResponseEntity.noContent().build();
     }

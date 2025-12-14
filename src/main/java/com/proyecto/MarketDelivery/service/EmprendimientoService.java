@@ -18,7 +18,7 @@ public class EmprendimientoService {
         return emprendimientoRepository.findAll();
     }
 
-    public Optional<Emprendimiento> getEmprendimientoById(int id) {
+    public Optional<Emprendimiento> getEmprendimientoById(long id) {
         return emprendimientoRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class EmprendimientoService {
         return emprendimientoRepository.save(e);
     }
 
-    public void deleteEmprendimiento(int id) {
+    public void deleteEmprendimiento(long id) {
         emprendimientoRepository.deleteById(id);
     }
 }

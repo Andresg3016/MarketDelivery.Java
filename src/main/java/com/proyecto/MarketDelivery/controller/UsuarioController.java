@@ -1,3 +1,4 @@
+
 package com.proyecto.MarketDelivery.controller;
 
 import com.proyecto.MarketDelivery.model.Usuario;
@@ -14,6 +15,11 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @GetMapping
+    public List<Usuario> listarUsuarios() {
+        return usuarioService.getAllUsuarios();
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Usuario> register(@RequestBody Usuario usuario,

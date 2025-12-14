@@ -11,20 +11,14 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Usuario")
-    private Long id; // mejor usar Long para consistencia con Rol
+    @Column(name = "id_usuario")
+    private Integer id;
 
-    @Column(name = "nombre1_usuario")
-    private String nombre1;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
-    @Column(name = "nombre2_usuario")
-    private String nombre2;
-
-    @Column(name = "apellido1_usuario")
-    private String apellido1;
-
-    @Column(name = "apellido2_usuario")
-    private String apellido2;
+    @Column(name = "apellido", nullable = false)
+    private String apellido;
 
     @Column(name = "cedula_usuario")
     private String cedula;
@@ -38,14 +32,14 @@ public class Usuario {
     @Column(name = "direccion_usuario")
     private String direccion;
 
-    @Column(name = "user_name", nullable = false, unique = true)
-    private String username; // coincide con th:field="*{username}"
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "Carrito_Id_Carrito")
+    @JoinColumn(name = "carrito_id_carrito")
     private Carrito carrito;
 
     @OneToMany(mappedBy = "usuario")
@@ -59,27 +53,21 @@ public class Usuario {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "usuario_roles",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "rol_id")
+        name = "usuario_rol",
+        joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id_usuario"),
+        inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id_rol")
     )
-    private Set<Rol> roles = new HashSet<>();
+    private Set<Rol> roles = new HashSet<Rol>();
 
     // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getNombre1() { return nombre1; }
-    public void setNombre1(String nombre1) { this.nombre1 = nombre1; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getNombre2() { return nombre2; }
-    public void setNombre2(String nombre2) { this.nombre2 = nombre2; }
-
-    public String getApellido1() { return apellido1; }
-    public void setApellido1(String apellido1) { this.apellido1 = apellido1; }
-
-    public String getApellido2() { return apellido2; }
-    public void setApellido2(String apellido2) { this.apellido2 = apellido2; }
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
 
     public String getCedula() { return cedula; }
     public void setCedula(String cedula) { this.cedula = cedula; }

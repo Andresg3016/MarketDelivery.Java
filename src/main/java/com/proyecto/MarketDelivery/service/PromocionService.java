@@ -18,7 +18,7 @@ public class PromocionService {
         return promocionRepository.findAll();
     }
 
-    public Optional<Promocion> getPromocionById(int id) {
+    public Optional<Promocion> getPromocionById(Long id) {
         return promocionRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class PromocionService {
         return promocionRepository.save(p);
     }
 
-    public void deletePromocion(int id) {
+    public void deletePromocion(Long id) {
         promocionRepository.deleteById(id);
     }
 }

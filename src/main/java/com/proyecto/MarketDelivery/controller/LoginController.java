@@ -2,12 +2,14 @@ package com.proyecto.MarketDelivery.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 
 @Controller
 public class LoginController {
 
     @GetMapping("/login")
-    public String mostrarLogin() {
-        return "login"; // busca login.html en templates
+    public String mostrarLogin(Model model) {
+        model.addAttribute("usuario", new com.proyecto.MarketDelivery.model.Usuario());
+        return "home";
     }
 }

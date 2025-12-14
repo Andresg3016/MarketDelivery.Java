@@ -1,37 +1,39 @@
+
 package com.proyecto.MarketDelivery.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "carrito")
 public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Carrito")
+    @Column(name = "id_carrito")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "Producto_Id_Producto")
-    private Producto producto;
-
-    @ManyToOne
-    @JoinColumn(name = "Servicio_Id_Servicio")
-    private Servicio servicio;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     @Column(name = "total")
     private BigDecimal total;
 
-    // Getters y Setters
+    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CarritoItem> items;
+
+    public Carrito() {}
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-    public Producto getProducto() { return producto; }
-    public void setProducto(Producto producto) { this.producto = producto; }
-
-    public Servicio getServicio() { return servicio; }
-    public void setServicio(Servicio servicio) { this.servicio = servicio; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
+
+    public List<CarritoItem> getItems() { return items; }
+    public void setItems(List<CarritoItem> items) { this.items = items; }
 }

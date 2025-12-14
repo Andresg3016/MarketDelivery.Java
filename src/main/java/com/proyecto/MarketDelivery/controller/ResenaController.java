@@ -21,7 +21,7 @@ public class ResenaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Resena> getReseñaById(@PathVariable int id) {
+    public ResponseEntity<Resena> getReseñaById(@PathVariable Long id) {
         return resenaService.getReseñaById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -33,7 +33,7 @@ public class ResenaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Resena> updateReseña(@PathVariable int id, @RequestBody Resena resena) {
+    public ResponseEntity<Resena> updateReseña(@PathVariable Long id, @RequestBody Resena resena) {
         return resenaService.getReseñaById(id)
                 .map(existing -> {
                     resena.setId(id);
@@ -43,7 +43,7 @@ public class ResenaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReseña(@PathVariable int id) {
+    public ResponseEntity<Void> deleteReseña(@PathVariable Long id) {
         resenaService.deleteReseña(id);
         return ResponseEntity.noContent().build();
     }

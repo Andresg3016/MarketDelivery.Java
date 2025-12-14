@@ -4,40 +4,38 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "emprendimientos")
+@Table(name = "emprendimiento")
 public class Emprendimiento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Emprendimiento")
-    private Long id; // Consistencia con otras entidades
+    @Column(name = "id_emprendimiento")
+    private Long id;
 
-    @Column(name = "Nombre_Emprendimiento", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "tipo_emprendimiento", nullable = false)
+    @Column(name = "tipo", nullable = false)
     private String tipo;
 
-    @Column(name = "Descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "ciudad", nullable = false)
     private String ciudad;
 
-    @Column(name = "Direccion", nullable = false)
+    @Column(name = "direccion", nullable = false)
     private String direccion;
 
     @Column(name = "telefono")
     private String telefono;
 
     @ManyToOne
-    @JoinColumn(name = "Usuario_Id_Usuario", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "emprendimiento", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Servicio> servicios;
+    public Emprendimiento() {}
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -61,7 +59,4 @@ public class Emprendimiento {
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
-
-    public List<Servicio> getServicios() { return servicios; }
-    public void setServicios(List<Servicio> servicios) { this.servicios = servicios; }
 }

@@ -3,26 +3,35 @@ package com.proyecto.MarketDelivery.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "resenas")
+@Table(name = "resena")
 public class Resena {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Resenas")
-    private Integer id;
+    @Column(name = "id_resena")
+    private Long id;
 
-    @Column(name = "Descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "Calificacion")
+    @Column(name = "calificacion")
     private Integer calificacion;
 
     @ManyToOne
-    @JoinColumn(name = "Usuario_Id_Usuario")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
+
+    @ManyToOne
+    @JoinColumn(name = "servicio_id")
+    private Servicio servicio;
+
+    public Resena() {}
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
@@ -32,4 +41,10 @@ public class Resena {
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+
+    public Producto getProducto() { return producto; }
+    public void setProducto(Producto producto) { this.producto = producto; }
+
+    public Servicio getServicio() { return servicio; }
+    public void setServicio(Servicio servicio) { this.servicio = servicio; }
 }
